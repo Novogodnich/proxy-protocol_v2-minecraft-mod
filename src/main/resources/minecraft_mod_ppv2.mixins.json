@@ -1,0 +1,12 @@
+{
+	"required": true,
+	"package": "name.modid.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+		"ClientConnectionAccessor",
+		"ServerNetworkIoMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
