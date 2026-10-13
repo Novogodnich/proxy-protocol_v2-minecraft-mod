@@ -3,23 +3,20 @@
 	"id": "minecraft_mod_ppv2",
 	"version": "${version}",
 	"name": "minecraft_mod_PPv2",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "A minecraft fabric mod, which adds PPv2 support.",
 	"authors": [
 		"Me!"
 	],
 	"contact": {
 		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/Novogodnich/proxy-protocol_v2-minecraft-mod/tree/26.3"
 	},
-	"license": "CC0-1.0",
+	"license": "GNU GPL-3.0",
 	"icon": "assets/minecraft_mod_ppv2/icon.png",
-	"environment": "*",
+	"environment": "server",
 	"entrypoints": {
 		"main": [
 			"name.modid.Minecraft_mod_PPv2"
-		],
-		"client": [
-			"name.modid.client.Minecraft_mod_PPv2Client"
 		]
 	},
 	"mixins": [
