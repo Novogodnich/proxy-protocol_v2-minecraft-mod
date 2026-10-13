@@ -15,4 +15,5 @@ A lightweight Fabric server-side mod that adds native support for the HAProxy PR
 
 **Compatibility**:
 - Fabric Loader 0.18.4+
-- Minecraft 1.21.11
+- Minecraft 26.3
+- Fabric api >= 0.159.1+26.3
