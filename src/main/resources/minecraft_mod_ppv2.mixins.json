@@ -5,7 +5,7 @@
 	"mixins": [
 		"ChannelAccessor",
 		"ClientConnectionAccessor",
-		"ServerLoginPacketListenerImplAccessor"
+		"ServerChannelInitializerMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
