@@ -1,30 +1,36 @@
 package name.modid;
 
+import io.netty.channel.Channel;
+import io.netty.handler.codec.haproxy.HAProxyMessageDecoder;
+import name.modid.mixin.ChannelAccessor;
+import name.modid.mixin.ServerLoginPacketListenerImplAccessor;
+import name.modid.network.HAProxyHandler;
 import net.fabricmc.api.ModInitializer;
 
-import net.minecraft.util.Identifier;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import net.fabricmc.fabric.api.networking.v1.ServerLoginConnectionEvents;
+import net.minecraft.network.Connection;
+import net.minecraft.server.network.ServerLoginPacketListenerImpl;
 
 public class Minecraft_mod_PPv2 implements ModInitializer {
-	public static final String MOD_ID = "minecraft_mod_ppv2";
-
-	// This logger is used to write text to the console and the log file.
-	// It is considered best practice to use your mod id as the logger's name.
-	// That way, it's clear which mod wrote info, warnings, and errors.
-	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-
 	@Override
 	public void onInitialize() {
-		// This code runs as soon as Minecraft is in a mod-load-ready state.
-		// However, some things (like resources) may still be uninitialized.
-		// Proceed with mild caution.
 
-		LOGGER.info("Hello Fabric world!");
-	}
+		ServerLoginConnectionEvents.INIT.register((handler, server) -> {
+			if (handler instanceof ServerLoginPacketListenerImpl targetHandler) {
+				Connection connection = ((ServerLoginPacketListenerImplAccessor) targetHandler).getConnection();
 
-	public static Identifier id(String path) {
-		return Identifier.of(MOD_ID, path);
+				if (connection != null) {
+
+					Channel channel = ((ChannelAccessor) connection).getChannel();
+
+					if (channel != null) {
+						var pipeline = channel.pipeline();
+
+						pipeline.addFirst("haproxyDecoder", new HAProxyMessageDecoder());
+						pipeline.addAfter("haproxyDecoder", "mineguardProxyHandler", new HAProxyHandler(connection));
+					}
+				}
+			}
+		});
 	}
 }

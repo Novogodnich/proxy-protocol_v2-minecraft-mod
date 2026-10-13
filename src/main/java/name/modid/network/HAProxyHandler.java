@@ -1,17 +1,17 @@
 package name.modid.network;
 
-import io.netty.channel.ChannelHandlerContext;
+import  io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.haproxy.HAProxyMessage;
-import net.minecraft.network.ClientConnection;
 import name.modid.mixin.ClientConnectionAccessor;
+import net.minecraft.network.Connection;
 
 import java.net.InetSocketAddress;
 
 public class HAProxyHandler extends ChannelInboundHandlerAdapter {
-    private final ClientConnection connection;
+    private final Connection connection;
 
-    public HAProxyHandler(ClientConnection connection) {
+    public HAProxyHandler(Connection connection) {
         this.connection = connection;
     }
 
@@ -30,9 +30,6 @@ public class HAProxyHandler extends ChannelInboundHandlerAdapter {
                 e.printStackTrace();
 } finally {
     ipMessage.release();
-    if (ctx.pipeline().get("haproxyDecoder") != null) {
-        //ctx.pipeline().remove("haproxyDecoder");
-    }
     ctx.pipeline().remove(this);
 }        } else {
             super.channelRead(ctx, msg);
